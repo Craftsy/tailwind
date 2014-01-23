@@ -1,0 +1,29 @@
+#coverage {
+    background-color: #fafafa;
+    border: 1px inset #ddd;
+    box-sizing: border-box;
+    font-family: monospace;
+    font-size: 12px;
+    height: 500px;
+    margin: 50px;
+    overflow-y: scroll;
+    width: calc( 100% - 100px );
+    white-space: pre;
+}
+#coverage .tailwind-lineno {
+    background-color: #f0f0f0;
+    border-right: 1px solid #333;
+    color: #aaa;
+    margin-right: 5px;
+    padding-left: 5px;
+    padding-right: 2px;
+}
+#coverage .tailwind-covered {
+    background-color: rgb( 255, 255, 150 );
+}
+#coverage .tailwind-missed {
+    background-color: rgb( 255, 150, 150 );
+}
+#coverage .tailwind-covered:hover, #coverage .tailwind-missed:hover {
+    background-color: rgb( 200, 200, 200 );
+}

@@ -1,0 +1,43 @@
+<html>
+
+<head>
+    <title>Tailwind Tests</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/mocha.css" />
+    <link rel="stylesheet" href="css/coverage.css" />
+</head>
+
+<body>
+    <div id="mocha"></div>
+    <div id="coverage"></div>
+    <script src="js/mocha.js"></script>
+    <script src="js/chai.js"></script>
+    <script src="js/esprima.js"></script>
+    <script src="../tailwind.js"></script>
+
+    <script type="text/javascript">
+        mocha.ui('bdd');
+        mocha.reporter('html');
+        expect = chai.expect;
+    </script>
+
+    <script src="lib/test_tailwind.js"></script>
+
+    <script>
+        Tailwind.runScript(
+            'lib/test_script.js',
+            function( stats )
+            {
+                window.coverageStats = stats;
+                mocha.run(
+                    function()
+                    {
+                        document.getElementById( 'coverage' ).innerHTML = Tailwind.Reporters.html( stats );
+                    }
+                );
+            }
+        );
+    </script>
+</body>
+
+</html>

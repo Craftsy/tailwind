@@ -1,0 +1,368 @@
+{
+    "project": {
+        "name": "Tailwind",
+        "description": "Provides ability to check code coverage as a script runs",
+        "version": "0.1.0",
+        "url": "",
+        "logo": "http://www.craftsy.com/images/craftsy/logoMed.png"
+    },
+    "files": {
+        "tailwind.js": {
+            "name": "tailwind.js",
+            "modules": {
+                "Tailwind": 1
+            },
+            "classes": {
+                "Codeblock": 1,
+                "TailwindStats": 1,
+                "Tailwind": 1,
+                "Tailwind.Reporters": 1
+            },
+            "fors": {},
+            "namespaces": {
+                "Tailwind": 1
+            }
+        }
+    },
+    "modules": {
+        "Tailwind": {
+            "name": "Tailwind",
+            "submodules": {},
+            "classes": {
+                "Codeblock": 1,
+                "TailwindStats": 1,
+                "Tailwind": 1,
+                "Tailwind.Reporters": 1
+            },
+            "fors": {},
+            "namespaces": {
+                "Tailwind": 1
+            },
+            "tag": "module",
+            "file": "tailwind.js",
+            "line": 377,
+            "description": "Provides ability to check code coverage as a script runs"
+        }
+    },
+    "classes": {
+        "Codeblock": {
+            "name": "Codeblock",
+            "shortname": "Codeblock",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Tailwind",
+            "namespace": "",
+            "file": "tailwind.js",
+            "line": 7,
+            "description": "Contains information about a watched statement and gives the ability to track executions\n<br/><em>[this class cannot be created directly]</em>",
+            "params": [
+                {
+                    "name": "statement",
+                    "description": "The esprima-generated object describing this statement",
+                    "type": "Object"
+                },
+                {
+                    "name": "sourceCode",
+                    "description": "Full script that this statement is from, used to track exactly what code this statement points to",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "is_constructor": 1,
+            "access": "private",
+            "tagname": ""
+        },
+        "TailwindStats": {
+            "name": "TailwindStats",
+            "shortname": "TailwindStats",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Tailwind",
+            "namespace": "",
+            "file": "tailwind.js",
+            "line": 199,
+            "description": "Provides coverage statistics against some code\n<br/><em>[this class cannot be created directly]</em>",
+            "is_constructor": 1
+        },
+        "Tailwind": {
+            "name": "Tailwind",
+            "shortname": "Tailwind",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Tailwind",
+            "namespace": "",
+            "file": "tailwind.js",
+            "line": 251,
+            "static": 1
+        },
+        "Tailwind.Reporters": {
+            "name": "Tailwind.Reporters",
+            "shortname": "Tailwind.Reporters",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Tailwind",
+            "namespace": "Tailwind",
+            "file": "tailwind.js",
+            "line": 377,
+            "description": "Contains functions which generate a report from a TailwindStats object",
+            "static": 1
+        }
+    },
+    "classitems": [
+        {
+            "file": "tailwind.js",
+            "line": 40,
+            "description": "Internal ID for this Codeblock",
+            "itemtype": "property",
+            "name": "id",
+            "type": "Number",
+            "class": "Codeblock",
+            "module": "Tailwind"
+        },
+        {
+            "file": "tailwind.js",
+            "line": 46,
+            "description": "The Esprima-generated object this Codeblock is created for",
+            "itemtype": "property",
+            "name": "statement",
+            "type": "Object",
+            "class": "Codeblock",
+            "module": "Tailwind"
+        },
+        {
+            "file": "tailwind.js",
+            "line": 52,
+            "description": "Character index this Codeblock is found in the source code",
+            "itemtype": "property",
+            "name": "rangeStart",
+            "type": "Number",
+            "class": "Codeblock",
+            "module": "Tailwind"
+        },
+        {
+            "file": "tailwind.js",
+            "line": 58,
+            "description": "Character index this Codeblock ends at in the source code",
+            "itemtype": "property",
+            "name": "rangeEnd",
+            "type": "Number",
+            "class": "Codeblock",
+            "module": "Tailwind"
+        },
+        {
+            "file": "tailwind.js",
+            "line": 64,
+            "description": "Type of statement this Codeblock represents, as generated from Esprima",
+            "itemtype": "property",
+            "name": "type",
+            "type": "String",
+            "class": "Codeblock",
+            "module": "Tailwind"
+        },
+        {
+            "file": "tailwind.js",
+            "line": 70,
+            "description": "The source code represented by this Codeblock",
+            "itemtype": "property",
+            "name": "code",
+            "type": "String",
+            "class": "Codeblock",
+            "module": "Tailwind"
+        },
+        {
+            "file": "tailwind.js",
+            "line": 76,
+            "description": "How many times this Codeblock's statement was executed",
+            "itemtype": "property",
+            "name": "executionCount",
+            "type": "Number",
+            "default": "0",
+            "class": "Codeblock",
+            "module": "Tailwind"
+        },
+        {
+            "file": "tailwind.js",
+            "line": 83,
+            "description": "Increments the Codeblock's <em>executionCount</em> property",
+            "itemtype": "method",
+            "name": "countExecution",
+            "class": "Codeblock",
+            "module": "Tailwind"
+        },
+        {
+            "file": "tailwind.js",
+            "line": 94,
+            "description": "Checks for esprima to be available, throws an error if it isn't.",
+            "itemtype": "method",
+            "name": "checkForEsprima",
+            "access": "private",
+            "tagname": "",
+            "class": "Codeblock",
+            "module": "Tailwind"
+        },
+        {
+            "file": "tailwind.js",
+            "line": 107,
+            "description": "Records that a specific code block was executed",
+            "itemtype": "method",
+            "name": "watchBlock",
+            "params": [
+                {
+                    "name": "codeblock",
+                    "description": "",
+                    "type": "Codeblock"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "Codeblock",
+            "module": "Tailwind"
+        },
+        {
+            "file": "tailwind.js",
+            "line": 125,
+            "description": "Returns an object to use for an ajax request",
+            "itemtype": "method",
+            "name": "getAjaxObject",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "Callback function for the request to trigger after successful request",
+                    "type": "Function"
+                },
+                {
+                    "name": "errorCallback",
+                    "description": "Callback function which will fire if the request fails",
+                    "type": "Function"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "Codeblock",
+            "module": "Tailwind"
+        },
+        {
+            "file": "tailwind.js",
+            "line": 158,
+            "description": "Function used by the ajax requests to watch their state",
+            "itemtype": "method",
+            "name": "handleReadyStateChange",
+            "access": "private",
+            "tagname": "",
+            "class": "Codeblock",
+            "module": "Tailwind"
+        },
+        {
+            "file": "tailwind.js",
+            "line": 212,
+            "description": "Returns an overview of how many watched statements have been run.",
+            "itemtype": "method",
+            "name": "getReport",
+            "return": {
+                "description": "Dictionary object detailing total statements are watched and how many were run at least once",
+                "type": "Object"
+            },
+            "class": "TailwindStats",
+            "module": "Tailwind"
+        },
+        {
+            "file": "tailwind.js",
+            "line": 261,
+            "description": "Takes Javascript code and runs it while monitoring what statements are executed",
+            "itemtype": "method",
+            "name": "runCode",
+            "params": [
+                {
+                    "name": "code",
+                    "description": "The code to run",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Object containing information for reporting on coverage",
+                "type": "TailwindStats"
+            },
+            "class": "Tailwind",
+            "module": "Tailwind"
+        },
+        {
+            "file": "tailwind.js",
+            "line": 345,
+            "description": "Imports and executes a Javascript file while monitoring what statements are executed",
+            "itemtype": "method",
+            "name": "runScript",
+            "params": [
+                {
+                    "name": "scriptUrl",
+                    "description": "URL to the Javascript file to be monitored",
+                    "type": "String"
+                },
+                {
+                    "name": "callback",
+                    "description": "Function which will be called after the script is imported",
+                    "type": "Function",
+                    "props": [
+                        {
+                            "name": "stats",
+                            "description": "Object containing information for reporting on coverage",
+                            "type": "TailwindStats"
+                        }
+                    ]
+                }
+            ],
+            "class": "Tailwind",
+            "module": "Tailwind"
+        },
+        {
+            "file": "tailwind.js",
+            "line": 366,
+            "description": "Records that a specific code block was executed",
+            "itemtype": "method",
+            "name": "executeBlock",
+            "params": [
+                {
+                    "name": "blockId",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "Tailwind",
+            "module": "Tailwind"
+        },
+        {
+            "file": "tailwind.js",
+            "line": 384,
+            "itemtype": "method",
+            "name": "html",
+            "params": [
+                {
+                    "name": "stats",
+                    "description": "The stats object to generate a report for.",
+                    "type": "TailwindStats"
+                }
+            ],
+            "return": {
+                "description": "HTML code for the report",
+                "type": "String"
+            },
+            "class": "Tailwind.Reporters",
+            "module": "Tailwind",
+            "namespace": "Tailwind"
+        }
+    ],
+    "warnings": []
+}
