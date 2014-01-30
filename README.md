@@ -1,7 +1,7 @@
 Tailwind
 ========
 
-Tailwind is a code coverage utiltiy for JavaScript that can run in the browser. It works by importing a script and injecting watch statements which analyze what statements in the code are executed. Analytics about the code coverage can be polled in real-time and used to generated reports.
+Tailwind is a code coverage utility for JavaScript that runs in the browser. It works by importing the target script and uses [Esprima](http://esprima.org/) to identify which statements and branching it should watch. Analytics about the code coverage can then be polled in real-time and used to generated reports.
 
 Tailwind is most effective when combined with a testing framework like [mocha](http://visionmedia.github.io/mocha/).
 
