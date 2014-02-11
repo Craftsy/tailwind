@@ -1,0 +1,12 @@
+{
+    "name": "Tailwind",
+    "description": "Provides ability to check code coverage as a script runs",
+    "version": "0.1.0",
+    "url": "",
+    "logo": "http://www.craftsy.com/images/craftsy/logoMed.png",
+    "options": {
+        "outdir": "docs",
+        "linkNatives": true,
+        "exclude": "tests"
+    }
+}
