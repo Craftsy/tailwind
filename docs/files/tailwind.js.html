@@ -215,7 +215,7 @@ window.Tailwind = (function(){
          * @param errorCallback {Function} Callback function which will fire if the request fails
          * @private
          */
-        getAjaxObject = function( callback, errorCallback )
+            getAjaxObject = function( callback, errorCallback )
         {
             var request;
 
@@ -246,7 +246,7 @@ window.Tailwind = (function(){
          * @method handleReadyStateChange
          * @private
          */
-        handleReadyStateChange = function()
+            handleReadyStateChange = function()
         {
             if ( this.readyState === 4 )
             {
@@ -322,6 +322,18 @@ window.Tailwind = (function(){
         var key, child;
 
         for ( key in object ) {
+            // Don&#x27;t check the init part of ForStatements, often contain VariableDeclaration which we can&#x27;t monitor
+            if ( object.type === &#x27;ForStatement&#x27; &amp;&amp; key === &#x27;init&#x27; )
+            {
+                continue;
+            }
+
+            // Don&#x27;t check the left part of ForInStatements, often contain VariableDeclaration which we can&#x27;t monitor
+            if ( object.type === &#x27;ForInStatement&#x27; &amp;&amp; key === &#x27;left&#x27; )
+            {
+                continue;
+            }
+
             if ( object.hasOwnProperty( key ) ) {
                 child = object[key];
                 if ( typeof child === &#x27;object&#x27; &amp;&amp; child !== null ) {
@@ -343,7 +355,9 @@ window.Tailwind = (function(){
                         }
                         else
                         {
-                            object[key] = { type: &#x27;Program&#x27;, body: [ result, object[key] ]  }
+                            //object[key] = { type: &#x27;Program&#x27;, body: [ result, object[key] ]  }
+                            object[key] = { type: &#x27;BlockStatement&#x27;, body: [ result, object[key] ]  }
+                            //object[key] = { &#x27;type&#x27;: &#x27;ExpressionStatement&#x27;, &#x27;expression&#x27;: object[key] }
                         }
                     }
                 }
@@ -377,11 +391,6 @@ window.Tailwind = (function(){
      * @static
      */
     var Tailwind = {
-        regularBlocks: [
-            &#x27;BlockStatement&#x27;,
-            &#x27;Program&#x27;
-        ],
-
         /**
          * Takes Javascript code and runs it while monitoring what statements are executed
          * @method runCode
@@ -430,6 +439,7 @@ window.Tailwind = (function(){
 
             // 3. Safely execute the modified code
             var modifiedCode = escodegen.generate( syntaxTree );
+            window.code = modifiedCode;
             window.eval.call( undefined, modifiedCode );
 
             return stats;
