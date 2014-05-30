@@ -113,24 +113,6 @@ window.Tailwind = (function(){
         },
 
         /**
-         * Records that a specific code block was executed
-         * @method watchBlock
-         * @param codeblock {Codeblock}
-         * @private
-         */
-        watchBlock = function( codeblock )
-        {
-            if ( codeblock.expression )
-            {
-                return 'Tailwind.executeBlock( ' + codeblock.id + ' ) || ';
-            }
-            else
-            {
-                return 'Tailwind.executeBlock( ' + codeblock.id + ' );';
-            }
-        },
-
-        /**
          * Returns an object to use for an ajax request
          * @method getAjaxObject
          * @param callback {Function} Callback function for the request to trigger after successful request
@@ -170,8 +152,6 @@ window.Tailwind = (function(){
          */
         handleReadyStateChange = function()
         {
-            var data;
-
             if ( this.readyState === 4 )
             {
                 var hasErrorCallback = typeof this.onerror === 'function';
@@ -300,7 +280,7 @@ window.Tailwind = (function(){
      * @class Tailwind
      * @static
      */
-    Tailwind = {
+    var Tailwind = {
         regularBlocks: [
             'BlockStatement',
             'Program'
