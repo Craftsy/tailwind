@@ -40,7 +40,7 @@
             },
             "tag": "module",
             "file": "tailwind.js",
-            "line": 377,
+            "line": 375,
             "description": "Provides ability to check code coverage as a script runs"
         }
     },
@@ -86,7 +86,7 @@
             "module": "Tailwind",
             "namespace": "",
             "file": "tailwind.js",
-            "line": 199,
+            "line": 187,
             "description": "Provides coverage statistics against some code\n<br/><em>[this class cannot be created directly]</em>",
             "is_constructor": 1
         },
@@ -101,7 +101,7 @@
             "module": "Tailwind",
             "namespace": "",
             "file": "tailwind.js",
-            "line": 251,
+            "line": 279,
             "static": 1
         },
         "Tailwind.Reporters": {
@@ -115,7 +115,7 @@
             "module": "Tailwind",
             "namespace": "Tailwind",
             "file": "tailwind.js",
-            "line": 377,
+            "line": 375,
             "description": "Contains functions which generate a report from a TailwindStats object",
             "static": 1
         }
@@ -214,25 +214,7 @@
         },
         {
             "file": "tailwind.js",
-            "line": 107,
-            "description": "Records that a specific code block was executed",
-            "itemtype": "method",
-            "name": "watchBlock",
-            "params": [
-                {
-                    "name": "codeblock",
-                    "description": "",
-                    "type": "Codeblock"
-                }
-            ],
-            "access": "private",
-            "tagname": "",
-            "class": "Codeblock",
-            "module": "Tailwind"
-        },
-        {
-            "file": "tailwind.js",
-            "line": 125,
+            "line": 115,
             "description": "Returns an object to use for an ajax request",
             "itemtype": "method",
             "name": "getAjaxObject",
@@ -255,7 +237,7 @@
         },
         {
             "file": "tailwind.js",
-            "line": 158,
+            "line": 148,
             "description": "Function used by the ajax requests to watch their state",
             "itemtype": "method",
             "name": "handleReadyStateChange",
@@ -266,7 +248,7 @@
         },
         {
             "file": "tailwind.js",
-            "line": 212,
+            "line": 200,
             "description": "Returns an overview of how many watched statements have been run.",
             "itemtype": "method",
             "name": "getReport",
@@ -279,7 +261,7 @@
         },
         {
             "file": "tailwind.js",
-            "line": 261,
+            "line": 289,
             "description": "Takes Javascript code and runs it while monitoring what statements are executed",
             "itemtype": "method",
             "name": "runCode",
@@ -299,7 +281,7 @@
         },
         {
             "file": "tailwind.js",
-            "line": 345,
+            "line": 342,
             "description": "Imports and executes a Javascript file while monitoring what statements are executed",
             "itemtype": "method",
             "name": "runScript",
@@ -327,7 +309,7 @@
         },
         {
             "file": "tailwind.js",
-            "line": 366,
+            "line": 363,
             "description": "Records that a specific code block was executed",
             "itemtype": "method",
             "name": "executeBlock",
@@ -345,7 +327,7 @@
         },
         {
             "file": "tailwind.js",
-            "line": 384,
+            "line": 382,
             "itemtype": "method",
             "name": "html",
             "params": [
