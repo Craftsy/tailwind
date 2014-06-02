@@ -8,7 +8,7 @@
             tryCatch();
 
             var ending = coverageStats.getReport().executed;
-            return assert.equal( ending - starting, 7 );
+            return assert.equal( ending - starting, 16 );
         });
     });
 
@@ -19,7 +19,7 @@
             conditional();
 
             var ending = coverageStats.getReport().executed;
-            return assert.equal( ending - starting, 3 );
+            return assert.equal( ending - starting, 4 );
         });
 
         it('testConditionals2', function(){
@@ -48,7 +48,7 @@
             branching1( false );
 
             var ending = coverageStats.getReport().executed;
-            return assert.equal( ending - starting, 2 );
+            return assert.equal( ending - starting, 3 );
         });
 
         it('testBranching1.2', function(){
@@ -57,7 +57,7 @@
             branching1( true );
 
             var ending = coverageStats.getReport().executed;
-            return assert.equal( ending - starting, 1 );
+            return assert.equal( ending - starting, 2 );
         });
 
         it('testBranching2.1', function(){
@@ -66,7 +66,7 @@
             branching2( true );
 
             var ending = coverageStats.getReport().executed;
-            return assert.equal( ending - starting, 2 );
+            return assert.equal( ending - starting, 4 );
         });
 
         it('testBranching2.2', function(){

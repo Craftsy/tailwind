@@ -104,21 +104,11 @@ window.Tailwind = (function(){
             }
         },
 
-        /**
-         * Records that a specific code block was executed
-         * @method watchBlock
-         * @param codeblock {Codeblock}
-         * @private
-         */
-        watchBlock = function( codeblock )
+        checkForEscodegen = function()
         {
-            if ( codeblock.expression )
+            if ( window.escodegen === undefined )
             {
-                return 'Tailwind.executeBlock( ' + codeblock.id + ' ) || ';
-            }
-            else
-            {
-                return 'Tailwind.executeBlock( ' + codeblock.id + ' );';
+                throw new Error( 'Escodegen must be included on the page <https://github.com/Constellation/escodegen/>' );
             }
         },
 
@@ -129,7 +119,7 @@ window.Tailwind = (function(){
          * @param errorCallback {Function} Callback function which will fire if the request fails
          * @private
          */
-        getAjaxObject = function( callback, errorCallback )
+            getAjaxObject = function( callback, errorCallback )
         {
             var request;
 
@@ -160,10 +150,8 @@ window.Tailwind = (function(){
          * @method handleReadyStateChange
          * @private
          */
-        handleReadyStateChange = function()
+            handleReadyStateChange = function()
         {
-            var data;
-
             if ( this.readyState === 4 )
             {
                 var hasErrorCallback = typeof this.onerror === 'function';
@@ -234,17 +222,71 @@ window.Tailwind = (function(){
         }
     };
 
-    function traverse( object, visitor ) {
+    function traverse( object, visitor, code ) {
         var key, child;
 
-        visitor.call( null, object );
         for ( key in object ) {
+            // Don't check the init part of ForStatements, often contain VariableDeclaration which we can't monitor
+            if ( object.type === 'ForStatement' && key === 'init' )
+            {
+                continue;
+            }
+
+            // Don't check the left part of ForInStatements, often contain VariableDeclaration which we can't monitor
+            if ( object.type === 'ForInStatement' && key === 'left' )
+            {
+                continue;
+            }
+
             if ( object.hasOwnProperty( key ) ) {
                 child = object[key];
                 if ( typeof child === 'object' && child !== null ) {
-                    traverse( child, visitor );
+                    var result = traverse( child, visitor );
+
+                    if ( object[key].type === 'ConditionalExpression' )
+                    {
+                        var codeblock = new Codeblock( object[key].consequent, code );
+                        object[key].consequent = getMonitorStatement( codeblock, object[key].consequent );
+
+                        codeblock = new Codeblock( object[key].alternate, code );
+                        object[key].alternate = getMonitorStatement( codeblock, object[key].alternate );
+                    }
+
+                    if ( result ) {
+                        if ( object[key].body instanceof Array )
+                        {
+                            object[key].body.unshift( result );
+                        }
+                        else
+                        {
+                            //object[key] = { type: 'Program', body: [ result, object[key] ]  }
+                            object[key] = { type: 'BlockStatement', body: [ result, object[key] ]  }
+                            //object[key] = { 'type': 'ExpressionStatement', 'expression': object[key] }
+                        }
+                    }
                 }
             }
+        }
+
+        return visitor.call( null, object, code );
+    }
+
+    function getMonitorStatement( codeblock, retval )
+    {
+        if ( retval == null )
+        {
+            return {"type": "ExpressionStatement", "expression": {"type": "CallExpression", "callee": {"type": "MemberExpression", "computed": false, "object": {"type": "Identifier", "name": "Tailwind"}, "property": {"type": "Identifier", "name": "executeBlock"}}, "arguments":
+                [
+                    {"type": "Literal", "value": codeblock.id, "raw": codeblock.id.toString()}
+                ]}};
+        }
+        else
+        {
+            return {"type": "CallExpression", "callee": {"type": "MemberExpression", "computed": false, "object": {"type": "Identifier", "name": "Tailwind"}, "property": {"type": "Identifier", "name": "executeBlock"}}, "arguments":
+                [
+                    {"type": "Literal", "value": codeblock.id, "raw": codeblock.id.toString()},
+                    retval
+                ]};
         }
     }
 
@@ -252,12 +294,7 @@ window.Tailwind = (function(){
      * @class Tailwind
      * @static
      */
-    Tailwind = {
-        regularBlocks: [
-            'BlockStatement',
-            'Program'
-        ],
-
+    var Tailwind = {
         /**
          * Takes Javascript code and runs it while monitoring what statements are executed
          * @method runCode
@@ -267,76 +304,46 @@ window.Tailwind = (function(){
         runCode: function( code )
         {
             checkForEsprima();
+            checkForEscodegen();
             var stats = new TailwindStats( code );
 
             // 1. Use Esprima to parse the script
             var syntaxTree = esprima.parse( code, { range: true } );
 
             // 2. Locate branches and what we care about
-            var codeblocks = [];
+            var careAbout = [
+                'VariableDeclaration',
+                'ExpressionStatement',
+                'BlockStatement',
+                'ThrowStatement',
+                'FunctionDeclaration',
+                'ReturnStatement',
+                'BreakStatement'
+            ];
+
             traverse(
                 syntaxTree,
-                function ( node ) {
+                function( node )
+                {
                     if ( node.type === undefined || node.range === undefined )
                     {
                         return;
                     }
 
-                    if ( Tailwind.regularBlocks.indexOf( node.type ) !== -1 )
+                    if ( careAbout.indexOf( node.type ) !== -1 )
                     {
-                        codeblocks.push( new Codeblock( node, code ) );
+                        var codeblock = new Codeblock( node, code );
+                        return getMonitorStatement( codeblock );
                     }
-
-                    if ( node.type === 'ConditionalExpression' )
-                    {
-                        codeblocks.push( new Codeblock( node.consequent, code, true ) );
-                        codeblocks.push( new Codeblock( node.alternate, code, true ) );
-                    }
-                    else if ( node.type === 'SwitchCase' && node.consequent.length > 0 )
-                    {
-                        // SwitchCase's consequent property is an array of the statements inside the case.
-                        // Create a custom codeblock which wraps the entirety of the case's contents
-                        codeblocks.push( new Codeblock( { type: 'SwitchCase', range: [ node.consequent[0].range[0], node.consequent[node.consequent.length-1].range[1] ] }, code ) );
-                    }
-                }
-            );
-
-            // Sort the statements by when they occur, just in case (may not be necessary)
-            codeblocks.sort(
-                function( a, b )
-                {
-                    a = a.rangeStart;
-                    b = b.rangeStart;
-                    if ( a < b ) return -1;
-                    if ( a > b ) return 1;
-                    return 0;
-                }
+                },
+                code
             );
 
             Array.prototype.push.apply( stats.codeblocks, codeblocks );
 
-            // 3. Inject the coverage code
-            var statement_count = codeblocks.length,
-                modifiedCode = code,
-                offset = 0,
-                i, codeblock;
-            for ( i = 0; i < statement_count; i++ )
-            {
-                codeblock = codeblocks[i];
-                var rangeStart = codeblock.rangeStart + offset;
-
-                if ( codeblock.type === 'BlockStatement' )
-                {
-                    rangeStart += 1;
-                }
-
-                var watchCode = watchBlock( codeblock );
-                modifiedCode = modifiedCode.substring( 0, rangeStart ) + watchCode + modifiedCode.substring( rangeStart );
-                offset += watchCode.length;
-            }
-
-            // 4. Safely execute the modified code
-            window.test = modifiedCode;
+            // 3. Safely execute the modified code
+            var modifiedCode = escodegen.generate( syntaxTree );
+            window.code = modifiedCode;
             window.eval.call( undefined, modifiedCode );
 
             return stats;
@@ -372,6 +379,7 @@ window.Tailwind = (function(){
         executeBlock: function( blockId )
         {
             codeblocks[blockId].countExecution();
+            return arguments[1];
         },
 
         /**

@@ -23,7 +23,7 @@ function tryCatch()
     }
 
     try { 'Try clause two';
-     throw 'Throw two' }
+        throw 'Throw two' }
     catch( e )
     { 'Catch clause three'; }
 
